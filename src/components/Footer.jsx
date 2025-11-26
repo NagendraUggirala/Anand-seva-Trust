@@ -8,7 +8,9 @@ const Footer = () => {
   const quickLinks = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
-    { path: "/services", label: "Services" },
+    { path: "/services", label: "Our Programs" },
+    { path: "/industries", label: "Donations" },
+    { path: "/blog", label: "Blog" },
     { path: "/contact", label: "Contact" }
   ];
 
@@ -146,18 +148,18 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-gradient-to-b from-gray-900 to-[#081526] text-white">
+      <footer className="bg-gradient-to-b from-blue-900 to-[blue] text-white">
         <div className="container mx-auto px-6">
           
           {/* Main Footer Content */}
           <div className="py-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 mb-6">
               
               {/* Company Info */}
-              <div className="text-left">
-                <div className="flex items-start space-x-4 mb-4">
+              <div className="text-left md:col-span-4">
+                <div className="flex items-center space-x-3 mb-4">
                   {/* Founder Image and Logo */}
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2 flex-shrink-0">
                     <div className="w-16 h-16 rounded-full border-2 border-orange-200 overflow-hidden shadow-lg">
                       <img
                         src="/images/image.png"
@@ -173,26 +175,74 @@ const Footer = () => {
                       />
                     </div>
                   </div>
-                  <div className="text-left">
-                    <h2 className="text-2xl font-bold">
+                  {/* Text immediately to the side */}
+                  <div className="flex flex-col">
+                    <h2 className="text-xl md:text-2xl font-bold">
                       <span className="text-orange-400">ANAND</span> 
-                      <span className="text-white"> IMPORTS & EXPORTS</span>
+                      <span className="text-white"> SEVA TRUST</span>
                     </h2>
-                    <p className="text-orange-200 text-sm italic">"Connecting Markets. Delivering Excellence."</p>
+                    <p className="text-orange-200 text-xs md:text-sm italic">"Connecting Markets. Delivering Excellence."</p>
                   </div>
                 </div>
 
                 <div className="text-left">
                   <p className="text-gray-300 mb-3 text-sm leading-relaxed">
-                    A dynamic global trading enterprise dedicated to bridging national and international markets.
+                    A spiritual and social welfare trust devoted to serving humanity with compassion and devotion.
                   </p>
                   <p className="text-gray-300 mb-3 text-sm leading-relaxed">
-                    We specialize in the smooth movement of quality goods across borders, ensuring reliability, transparency, and value in every transaction.
+                    We work to provide support, guidance, and welfare services that enrich lives and strengthen communities, ensuring trust, transparency, and care in every initiative.
+                    
                   </p>
                 </div>
+              </div>
 
-                {/* Social Media with SVG Icons */}
-                <div className="flex space-x-3">
+              {/* Quick Links */}
+              <div className="text-left md:col-span-2 md:pl-6">
+                <h3 className="text-lg font-semibold mb-3 text-orange-400">Quick Links</h3>
+                <div className="space-y-2">
+                  {quickLinks.map((link, index) => (
+                    <Link
+                      key={index}
+                      to={link.path}
+                      className="block text-gray-300 py-1 text-sm hover:text-orange-400 transition-all duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Contact Info */}
+              <div className="text-left md:col-span-3 md:pl-4">
+                <h3 className="text-lg font-semibold mb-3 text-orange-400">Contact</h3>
+                <div className="space-y-3 text-sm">
+                  <div className="flex flex-col items-start space-y-2">
+                    <div className="flex items-start space-x-2">
+                      <i className="fas fa-map-marker-alt text-orange-400 mt-1 text-sm" />
+                      <span className="text-gray-300 text-left">
+                        Hiko, 131/A, 2nd Floor<br />
+                        Banjara Hills, Hyderabad<br />
+                        Telangana - 500034
+                      </span>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <i className="fas fa-phone text-orange-400 text-sm" />
+                      <span className="text-gray-300">+91 1800 123 4857</span>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <i className="fas fa-envelope text-orange-400 text-sm" />
+                      <span className="text-gray-300">info@anandsevatrust.com</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Follow Us Section */}
+              <div className="text-left md:col-span-3 md:pl-4">
+                <h3 className="text-lg font-semibold mb-3 text-orange-400">Follow Us</h3>
+                <div className="flex flex-wrap gap-3">
                   {[
                     { name: "facebook", url: "#", color: "hover:bg-blue-600" },
                     { name: "twitter", url: "#", color: "hover:bg-blue-400" },
@@ -213,49 +263,6 @@ const Footer = () => {
                   ))}
                 </div>
               </div>
-
-              {/* Quick Links */}
-              <div className="text-left">
-                <h3 className="text-lg font-semibold mb-3 text-orange-400">Quick Links</h3>
-                <div className="space-y-2">
-                  {quickLinks.map((link, index) => (
-                    <Link
-                      key={index}
-                      to={link.path}
-                      className="block text-gray-300 py-1 text-sm hover:text-orange-400 transition-all duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Contact Info */}
-              <div className="text-left">
-                <h3 className="text-lg font-semibold mb-3 text-orange-400">Contact</h3>
-                <div className="space-y-3 text-sm">
-                  <div className="flex flex-col items-start space-y-2">
-                    <div className="flex items-start space-x-2">
-                      <i className="fas fa-map-marker-alt text-orange-400 mt-1 text-sm" />
-                      <span className="text-gray-300 text-left">
-                        Hiko, 131/A, 2nd Floor<br />
-                        Banjara Hills, Hyderabad<br />
-                        Telangana - 500034
-                      </span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <i className="fas fa-phone text-orange-400 text-sm" />
-                      <span className="text-gray-300">+91 1800 123 4857</span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <i className="fas fa-envelope text-orange-400 text-sm" />
-                      <span className="text-gray-300">info@anandimportsexports.com</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -266,7 +273,7 @@ const Footer = () => {
               {/* Copyright */}
               <div className="text-center md:text-left">
                 <p className="text-gray-400 text-sm">
-                  © {currentYear} <span className="text-orange-400 font-semibold">Anand Imports & Exports</span>. All rights reserved.
+                  © {currentYear} <span className="text-orange-400 font-semibold">Anand Seva Trust</span>. All rights reserved.
                 </p>
               </div>
 

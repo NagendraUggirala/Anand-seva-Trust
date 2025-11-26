@@ -1,704 +1,516 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, useInView, useAnimation, AnimatePresence } from 'framer-motion';
+import React from "react";
+import { Button } from "../components/ui/button";
+import { Heart, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { FaStar } from "react-icons/fa";
 
-const Home = () => {
-  const [currentReviewSet, setCurrentReviewSet] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, threshold: 0.3 });
-  const controls = useAnimation();
+/* WORKFLOW STEPS */
+const steps = [
+  {
+    id: "01",
+    title: "Our Mission",
+    text: "Anand Seva Trust is dedicated to supporting families and individuals facing difficult or vulnerable circumstances.",
+  },
+  {
+    id: "02",
+    title: "Who We Support",
+    text: "We extend care to families without stability, children from troubled backgrounds, and individuals drifting toward unsafe environments.",
+  },
+  {
+    id: "03",
+    title: "Education & Learning",
+    text: "We provide quality education, academic guidance, skill development, and value-based learning to build a strong foundation.",
+  },
+  {
+    id: "04",
+    title: "Care & Protection",
+    text: "We ensure emotional healing, counselling, moral guidance, and a safe environment for growth and rebuilding confidence.",
+  },
+  {
+    id: "05",
+    title: "Path to Better Future",
+    text: "Through structured programs and compassionate care, we help restore dignity and offer new opportunities for stability and hope.",
+  },
+];
 
-  useEffect(() => {
-    if (isInView) {
-      controls.start('visible');
-    }
-  }, [isInView, controls]);
+const events = [
+  {
+    day: "29",
+    month: "July",
+    title: "Manager Disapproved of the Most Recent Work.",
+    text: "Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturaut",
+    venue: "350 5th Ave New York, NY 118 United States",
+    img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop",
+  },
+  {
+    day: "15",
+    month: "August",
+    title: "Annual Charity Gala Dinner 2024",
+    text: "Join us for an evening of fine dining and fundraising to support children's education",
+    venue: "Grand Ballroom, Manhattan, NY 10001",
+    img: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&h=250&fit=crop",
+  },
+  {
+    day: "22",
+    month: "September",
+    title: "Volunteer Training Workshop",
+    text: "Learn essential skills and techniques to become an effective volunteer in our community",
+    venue: "Community Center, Brooklyn, NY 11201",
+    img: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=400&h=250&fit=crop",
+  },
+  {
+    day: "05",
+    month: "October",
+    title: "Winter Clothing Drive Launch",
+    text: "Help us collect warm clothing for families in need during the upcoming winter season",
+    venue: "Central Park, New York, NY 10022",
+    img: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&h=250&fit=crop",
+  },
+];
 
-  // Auto-rotate reviews every 3 seconds
+const counters = [
+  { count: "260+", label: "Total Happy Children" },
+  { count: "110+", label: "Total Our Volunteer" },
+  { count: "190+", label: "Our Products & Gifts" },
+  { count: "560+", label: "Worldwide Donor" },
+];
+
+const HomePage = () => {
+  const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const testimonials = [
+    {
+      name: "Priya Sharma",
+      role: "Mother of supported child",
+      content:
+        "Anand Seva Trust gave my daughter the education and support she needed when we had nowhere else to turn.",
+      avatar: "PS",
+    },
+    {
+      name: "Rahul Mehta",
+      role: "Volunteer",
+      content:
+        "Working with the trust has been life-changing. Seeing the transformation is the most rewarding experience.",
+      avatar: "RM",
+    },
+    {
+      name: "Dr. Anjali Patel",
+      role: "Education Partner",
+      content:
+        "The systematic approach and genuine care shown by Anand Seva Trust sets them apart.",
+      avatar: "AP",
+    },
+  ];
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentReviewSet((prev) => (prev + 1) % Math.ceil(reviews.length / (window.innerWidth < 768 ? 1 : 3)));
-    }, 3000);
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  const features = [
-    {
-      icon: "🌍",
-      title: "Global Reach",
-      description: "Extensive network spanning multiple countries for seamless international trade"
-    },
-    {
-      icon: "✅",
-      title: "Quality Assurance",
-      description: "Rigorous quality control ensuring every product meets international standards"
-    },
-    {
-      icon: "🤝",
-      title: "Trusted Partnerships",
-      description: "Strong sourcing networks and strategic partnerships worldwide"
-    },
-    {
-      icon: "⚡",
-      title: "Reliable Service",
-      description: "Transparent transactions with fast delivery and committed service"
-    }
-  ];
-
-  const services = [
-    {
-      title: "International Export Services",
-      description: "We export premium-quality goods to global markets, ensuring every shipment meets international standards, industry compliance, and customer expectations.",
-      icon: "🌐",
-      features: ["Global Market Reach", "International Standards", "Industry Compliance", "Customer Satisfaction"]
-    },
-    {
-      title: "Domestic & National Distribution",
-      description: "Within India, we supply goods across states through a well-established logistics and supply chain system.",
-      icon: "🚚",
-      features: ["Fast Delivery", "Consistent Quality", "Well-Established Logistics", "Committed Service"]
-    },
-    {
-      title: "Global Import Solutions",
-      description: "We import a wide range of goods from trusted international suppliers, ensuring competitive pricing, authenticity, and quality assurance.",
-      icon: "📦",
-      features: ["Trusted Suppliers", "Competitive Pricing", "Quality Assurance", "Hassle-Free Service"]
-    }
-  ];
-
-  const industries = [
-    "Consumer goods",
-    "Food products & FMCG",
-    "Electronics & hardware",
-    "Textiles & garments",
-    "Industrial materials",
-    "Health & wellness products",
-    "Lifestyle & household goods"
-  ];
-
-  const values = [
-    {
-      title: "Reliability",
-      description: "Ensuring reliability, transparency, and value in every transaction",
-      icon: "🛡️"
-    },
-    {
-      title: "Excellence",
-      description: "Commitment to excellence in sourcing, quality, and service delivery",
-      icon: "⭐"
-    },
-    {
-      title: "Global Vision",
-      description: "Bridging national and international markets with seamless operations",
-      icon: "🌐"
-    }
-  ];
-
-  const reviews = [
-    {
-      id: 1,
-      name: "Rajesh Kumar",
-      location: "Consumer Goods Importer",
-      rating: 5,
-      comment: "Anand Imports & Exports has been our trusted partner for 5 years. Their quality assurance and reliable delivery have helped us grow our business significantly.",
-      avatar: "👨‍💼",
-      date: "January 2024"
-    },
-    {
-      id: 2,
-      name: "Priya Sharma",
-      location: "FMCG Distributor",
-      rating: 5,
-      comment: "The team's expertise in international trade and customs clearance makes them stand out. Every shipment arrives on time with complete documentation.",
-      avatar: "👩‍💼",
-      date: "December 2023"
-    },
-    {
-      id: 3,
-      name: "Amit Patel",
-      location: "Electronics Retailer",
-      rating: 5,
-      comment: "Their global sourcing network gives us access to premium products at competitive prices. Highly recommend for anyone in the import-export business.",
-      avatar: "👨‍💻",
-      date: "November 2023"
-    },
-    {
-      id: 4,
-      name: "Sunita Reddy",
-      location: "Textile Manufacturer",
-      rating: 5,
-      comment: "Anand Imports & Exports handles our export operations flawlessly. Their attention to compliance and quality standards is exceptional.",
-      avatar: "👩‍🏫",
-      date: "October 2023"
-    },
-    {
-      id: 5,
-      name: "Vikram Singh",
-      location: "Industrial Materials Supplier",
-      rating: 5,
-      comment: "We've been working with them for multiple product categories. Their transparent processes and reliable service keep us coming back.",
-      avatar: "👨‍🎓",
-      date: "September 2023"
-    },
-    {
-      id: 6,
-      name: "Neha Gupta",
-      location: "Health Products Distributor",
-      rating: 5,
-      comment: "The quality assurance and responsible sourcing practices are outstanding. Every product meets the highest standards.",
-      avatar: "👩‍⚕️",
-      date: "August 2023"
-    }
-  ];
-
-  // Get current set of reviews based on screen size
-  const getCurrentReviews = () => {
-    const isMobile = window.innerWidth < 768;
-    const reviewsPerView = isMobile ? 1 : 3;
-    return reviews.slice(currentReviewSet * reviewsPerView, currentReviewSet * reviewsPerView + reviewsPerView);
-  };
-
-  const [currentReviews, setCurrentReviews] = useState(getCurrentReviews());
-
-  // Update reviews when window resizes or review set changes
-  useEffect(() => {
-    const handleResize = () => {
-      setCurrentReviews(getCurrentReviews());
-    };
-
-    window.addEventListener('resize', handleResize);
-    setCurrentReviews(getCurrentReviews());
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, [currentReviewSet]);
-
-  const reviewVariants = {
-    enter: { opacity: 0, x: 100 },
-    center: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -100 }
-  };
-
-  const StarRating = ({ rating }) => {
-    return (
-      <div className="flex justify-center space-x-1 mb-3">
-        {[...Array(5)].map((_, index) => (
-          <span
-            key={index}
-            className={`text-lg ${
-              index < rating ? 'text-yellow-400' : 'text-gray-300'
-            }`}
-          >
-            ★
-          </span>
-        ))}
-      </div>
-    );
-  };
-
   return (
-    <div className="min-h-screen">
-      {/* Banner Hero Section - Anand Imports & Exports */}
-      <section className="position-relative py-5" style={{ 
-        background: 'linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #1976d2 100%)',
-        minHeight: '70vh',
-        display: 'flex',
-        alignItems: 'center',
-        overflow: 'hidden'
-      }}>
-        {/* Background Pattern - World Map Overlay Effect */}
-        <div className="position-absolute top-0 start-0 w-100 h-100 opacity-10" style={{
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M10 10h80v80H10z\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'0.5\'/%3E%3Cpath d=\'M20 20h60v60H20z\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'0.3\'/%3E%3C/svg%3E")',
-          backgroundSize: '200px 200px'
-        }}></div>
-        
-        {/* Shipping Container Icons - Decorative Elements */}
-        <div className="position-absolute" style={{ top: '10%', right: '5%', opacity: '0.1' }}>
-          <i className="bi bi-box-seam" style={{ fontSize: '150px', color: 'white' }}></i>
-        </div>
-        <div className="position-absolute" style={{ bottom: '15%', left: '8%', opacity: '0.1' }}>
-          <i className="bi bi-globe" style={{ fontSize: '120px', color: 'white' }}></i>
+    <div className="min-h-screen bg-white">
+
+      {/* ================= HERO SECTION ================= */}
+      <section className="relative py-24 flex items-center justify-center bg-gradient-to-br from-blue-900/90 via-purple-900/90 to-blue-800/90 text-white overflow-hidden">
+
+        {/* Background */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=2070&q=80')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-purple-900/70 to-blue-800/80"></div>
         </div>
 
-        {/* Text Content */}
-        <div className="container position-relative">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-10 col-xl-9 text-center text-white">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
+        {/* Bubbles */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-white/10 animate-float"
+              style={{
+                width: `${Math.random() * 20 + 5}px`,
+                height: `${Math.random() * 20 + 5}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${Math.random() * 10 + 10}s`,
+              }}
+            ></div>
+          ))}
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+            {/* LEFT TEXT */}
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/20 rounded-full text-sm border border-white/30">
+                <Heart className="h-4 w-4" />
+                Transforming Lives Since 2010
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">Anand Seva Trust</h1>
+
+              <p className="text-xl sm:text-2xl font-light mb-8 text-blue-100">
+                Extending Care. Restoring Lives. Empowering Futures.
+              </p>
+
+              <p className="text-base sm:text-lg text-blue-100 mb-8">
+                A compassionate initiative dedicated to supporting individuals and families facing difficulties.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button
+                  size="lg"
+                  onClick={() => navigate("/contact")}
+                  className="bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg flex items-center justify-center"
                 >
-                  {/* Headline */}
-                  <h1 className="display-3 fw-bold mb-4" style={{ 
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                    color: '#ffffff'
-                  }}>
-                    Anand Imports & Exports
-                  </h1>
-                  
-                  {/* Tagline */}
-                  <p className="lead fs-2 mb-4 fw-light" style={{ 
-                    color: '#ffd700',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
-                  }}>
-                    Connecting Markets. Delivering Excellence. Expanding Global Possibilities.
-                  </p>
-                  
-                  {/* Supporting Line */}
-                  <p className="fs-5 mb-5 fw-normal" style={{ 
-                    color: '#e3f2fd',
-                    maxWidth: '800px',
-                    margin: '0 auto 2rem',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                  }}>
-                    Your trusted partner in global trade — bridging nations with quality, transparency, and reliability.
-                  </p>
-
-                  {/* Call-to-Action Buttons */}
-                  <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center">
-                    <Link 
-                      to="/services" 
-                      className="btn btn-warning btn-lg px-5 py-3 fw-bold text-dark shadow-lg"
-                      style={{ 
-                        minWidth: '200px',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-                      onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                    >
-                      <i className="bi bi-arrow-right me-2"></i>
-                      Explore Our Services
-                    </Link>
-                    <Link 
-                      to="/contact" 
-                      className="btn btn-outline-light btn-lg px-5 py-3 fw-bold shadow-lg"
-                      style={{ 
-                        minWidth: '200px',
-                        borderWidth: '2px',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.transform = 'scale(1.05)';
-                        e.target.style.backgroundColor = 'rgba(255,255,255,0.2)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.transform = 'scale(1)';
-                        e.target.style.backgroundColor = 'transparent';
-                      }}
-                    >
-                      <i className="bi bi-handshake me-2"></i>
-                      Partner With Us
-                    </Link>
-                    <Link 
-                      to="/projects" 
-                      className="btn btn-outline-warning btn-lg px-5 py-3 fw-bold shadow-lg"
-                      style={{ 
-                        minWidth: '200px',
-                        borderWidth: '2px',
-                        borderColor: '#ffd700',
-                        color: '#ffd700',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.transform = 'scale(1.05)';
-                        e.target.style.backgroundColor = '#ffd700';
-                        e.target.style.color = '#0d47a1';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.transform = 'scale(1)';
-                        e.target.style.backgroundColor = 'transparent';
-                        e.target.style.color = '#ffd700';
-                      }}
-                    >
-                      <i className="bi bi-globe me-2"></i>
-                      Discover Global Opportunities
-                    </Link>
-                  </div>
-                </motion.div>
+                  Get Help Today <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-12 md:py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-8 md:mb-12"
-            >
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-800 mb-3 md:mb-4">
-                About Anand Imports & Exports
-              </h2>
-              <div className="w-16 md:w-20 h-1 bg-orange-500 mx-auto mb-4 md:mb-6"></div>
-              <p className="text-base md:text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed px-2">
-                Anand Imports & Exports is a dynamic global trading enterprise dedicated to bridging
-                national and international markets. We specialize in the smooth movement of quality
-                goods across borders, ensuring reliability, transparency, and value in every transaction.
-              </p>
-              <p className="text-base md:text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed px-2 mt-4">
-                With strong sourcing networks, strategic partnerships, and a commitment to excellence,
-                Anand Group serves as a trusted trading partner for businesses worldwide.
-              </p>
-            </motion.div>
+      {/* ================= HEART IMAGE SECTION ================= */}
+      <section className="w-full flex items-center justify-center bg-white px-4 sm:px-6 md:px-8 py-12 sm:py-20">
+        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="px-2"
-              >
-                <h3 className="text-xl md:text-2xl font-bold text-blue-800 mb-3 md:mb-4">Our Mission</h3>
-                <p className="text-gray-700 mb-3 md:mb-4 leading-relaxed text-sm md:text-base">
-                  To bridge national and international markets by facilitating the smooth movement of 
-                  quality goods across borders, ensuring reliability, transparency, and value in every transaction.
-                </p>
-                <p className="text-gray-700 leading-relaxed text-sm md:text-base">
-                  We are committed to building strong sourcing networks and strategic partnerships that 
-                  enable businesses worldwide to access global markets seamlessly.
-                </p>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="bg-white p-4 md:p-6 rounded-xl shadow-lg mx-2"
-              >
-                <h4 className="text-lg md:text-xl font-semibold text-blue-800 mb-3 md:mb-4">Why Choose Us</h4>
-                <ul className="space-y-2 md:space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2 md:mr-3 mt-1 text-sm">•</span>
-                    <span className="text-gray-700 text-sm md:text-base">Strong sourcing networks worldwide</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2 md:mr-3 mt-1 text-sm">•</span>
-                    <span className="text-gray-700 text-sm md:text-base">Strategic partnerships for reliable supply</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2 md:mr-3 mt-1 text-sm">•</span>
-                    <span className="text-gray-700 text-sm md:text-base">Complete transparency in all transactions</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2 md:mr-3 mt-1 text-sm">•</span>
-                    <span className="text-gray-700 text-sm md:text-base">Quality assurance and compliance management</span>
-                  </li>
-                </ul>
-              </motion.div>
+          {/* IMAGE */}
+          <div className="relative flex items-center justify-center">
+            <div
+              className="absolute -top-16 -left-10 w-60 sm:w-72 h-60 sm:h-72 rounded-full blur-3xl opacity-40"
+              style={{ background: "linear-gradient(135deg, #ff784f, #ffb16d)" }}
+            ></div>
+
+            <div
+              className="w-80 sm:w-[500px] h-80 sm:h-[500px] overflow-hidden"
+              style={{
+                clipPath:
+                  "path('M 250 450 C 60 320 0 210 0 140 C 0 60 70 0 150 0 C 210 0 250 30 250 70 C 250 30 290 0 350 0 C 430 0 500 60 500 140 C 500 210 440 320 250 450 Z')",
+              }}
+            >
+              <img
+                src="https://themeshub.net/themes/freeweb/free/charitics/assets/img/about-img.png"
+                alt="heart"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Key Features */}
-      <section className="py-12 md:py-16 bg-white">
-        <style>{`
-          @keyframes shine {
-            0% {
-              transform: translateX(-100%) skewX(-15deg);
-            }
-            100% {
-              transform: translateX(200%) skewX(-15deg);
-            }
-          }
-          .shine-hover {
-            position: relative;
-            overflow: hidden;
-          }
-          .shine-hover::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-              90deg,
-              transparent 0%,
-              rgba(255, 255, 255, 0.6) 50%,
-              transparent 100%
-            );
-            transform: translateX(-100%) skewX(-15deg);
-            pointer-events: none;
-            z-index: 1;
-          }
-          .shine-hover:hover::before {
-            animation: shine 0.8s ease-in-out;
-          }
-          .shine-hover > * {
-            position: relative;
-            z-index: 2;
-          }
-        `}</style>
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-800 mb-3 md:mb-4">
-              The Anand Imports & Exports Advantage
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed px-2">
-              Experience the difference that comes with trusted global trading expertise
+          {/* TEXT */}
+          <div>
+            <h4 className="text-orange-600 font-semibold mb-3 text-sm sm:text-base">About Us</h4>
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-snug sm:leading-tight">
+              Helping Each Other Can Make <br /> World Better
+            </h1>
+
+            <p className="text-gray-600 text-base sm:text-lg mb-8">
+              We help families and children facing difficulties with care, education and support.
             </p>
-          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto px-2">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="bg-gradient-to-br from-blue-50 to-white p-4 md:p-6 rounded-xl shadow-md border border-blue-100 text-center shine-hover"
-              >
-                <div className="text-3xl md:text-4xl mb-3 md:mb-4">{feature.icon}</div>
-                <h3 className="text-lg md:text-xl font-semibold text-blue-800 mb-2 md:mb-3 leading-tight">{feature.title}</h3>
-                <p className="text-gray-600 text-xs md:text-sm leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
+            <button className="bg-orange-600 text-white px-5 sm:px-7 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-orange-700 transition flex items-center gap-2">
+              Explore More →
+            </button>
           </div>
         </div>
       </section>
 
-      {/* What We Do Section */}
-      <section className="py-12 md:py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-800 mb-3 md:mb-4">
-              What We Do
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
-              We handle both import and export operations, ensuring that high-quality products move
-              seamlessly between countries and continents.
-            </p>
-          </motion.div>
+      {/* ================= DONATION SECTION ================= */}
+      <section className="flex justify-center px-4 sm:px-6 md:px-8 py-10 sm:py-20">
+        <div className="w-full max-w-[1200px] flex flex-col lg:flex-row gap-6 lg:gap-12 bg-red-600 rounded-2xl p-6 sm:p-10 text-white">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto px-2">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="p-4 md:p-6">
-                  <div className="text-4xl md:text-5xl mb-3 md:mb-4 text-center text-blue-600">{service.icon}</div>
-                  <h3 className="text-lg md:text-xl font-bold text-blue-800 mb-2 md:mb-3 text-center leading-tight">{service.title}</h3>
-                  <p className="text-gray-600 text-center mb-3 md:mb-4 text-sm md:text-base">{service.description}</p>
-                  <ul className="space-y-1 md:space-y-2">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-gray-700 text-xs md:text-sm">
-                        <span className="text-orange-500 mr-1 md:mr-2">✓</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+          {/* LEFT DONATE BOX */}
+          <div className="w-full lg:w-1/2 bg-[url('https://themeshub.net/demo-charitics/assets/images/hero/hero-dark.jpg')] bg-cover bg-center rounded-2xl p-6 sm:p-8 min-h-[280px]">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Custome Donate Now</h2>
 
-      {/* Industries We Serve Section */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-800 mb-3 md:mb-4">
-              Industries We Serve
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
-              We ensure responsible sourcing, tested quality, and tailored supply solutions for all industries.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto px-2">
-            {industries.map((industry, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-blue-50 to-white p-4 md:p-6 rounded-xl shadow-md border border-blue-100 text-center hover:shadow-lg transition-shadow"
-              >
-                <div className="text-2xl md:text-3xl mb-2 md:mb-3">✓</div>
-                <h3 className="text-base md:text-lg font-semibold text-blue-800 leading-tight">{industry}</h3>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Customer Reviews Carousel */}
-      <section className="py-12 md:py-16 bg-gradient-to-br from-blue-50 to-gray-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-800 mb-3 md:mb-4">
-              What Our Partners Say
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed px-2">
-              Trusted by businesses worldwide for reliable global trading solutions
-            </p>
-          </motion.div>
-
-          <div className="max-w-6xl mx-auto px-2">
-            <div className="relative">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentReviewSet}
-                  variants={reviewVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className={`grid gap-4 md:gap-6 ${
-                    window.innerWidth < 768 ? 'grid-cols-1' : 'grid-cols-3'
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-4">
+              {["10", "20", "30", "40", "50"].map((amt, i) => (
+                <button
+                  key={i}
+                  className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full font-semibold border-none cursor-pointer ${
+                    i === 0 ? "bg-orange-500 text-white" : "bg-white text-black"
                   }`}
                 >
-                  {currentReviews.map((review) => (
-                    <div key={review.id} className="bg-white rounded-xl shadow-lg p-4 md:p-6 hover:shadow-xl transition-all duration-300">
-                      <StarRating rating={review.rating} />
-                      <blockquote className="text-gray-700 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed min-h-[80px] md:min-h-[96px]">
-                        "{review.comment}"
-                      </blockquote>
-                      <div className="flex items-center space-x-2 md:space-x-3">
-                        <div className="text-2xl md:text-3xl">{review.avatar}</div>
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-900 text-sm md:text-base">{review.name}</div>
-                          <div className="text-xs text-gray-600">{review.location}</div>
-                          <div className="text-xs text-gray-500">{review.date}</div>
+                  {amt}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex gap-2 sm:gap-3">
+              <input
+                type="number"
+                placeholder="10"
+                className="flex-1 p-2 sm:p-3 rounded-full border-none"
+              />
+              <button className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 text-white font-bold rounded-full">
+                Donate Now
+              </button>
+            </div>
+          </div>
+
+          {/* RIGHT */}
+          <div className="w-full lg:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-4">
+              Support Kids by Raising <br /> Valuable Donations
+            </h1>
+
+            <p className="text-base sm:text-lg mb-2">Raised: $25,000</p>
+
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="64"
+              readOnly
+              className="w-full mb-2 sm:mb-4"
+            />
+
+            <p className="text-right text-sm sm:text-base">Goal: $30,000</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= COUNTERS SECTION ================= */}
+      <section className="py-16 sm:py-20 bg-blue-50 px-4 sm:px-6 md:px-8">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {counters.map((item, index) => (
+              <div key={index} className="flex flex-col items-center text-center group">
+                <div className="w-24 sm:w-32 h-24 sm:h-32 rounded-full border-4 border-blue-500 flex flex-col items-center justify-center mb-4 sm:mb-6 hover:border-blue-600 hover:bg-blue-50 transition-all duration-300">
+                  {/* Icons dynamically */}
+                  {/* Count */}
+                  <h2 className="text-2xl sm:text-3xl font-bold text-blue-500 group-hover:text-blue-600 transition-colors">
+                    {item.count}
+                  </h2>
+                </div>
+                <p className="text-base sm:text-lg font-semibold text-gray-700 group-hover:text-gray-900 transition-colors">
+                  {item.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= EVENTS SECTION ================= */}
+      <section className="py-16 sm:py-20 bg-blue-50 px-4 sm:px-6 md:px-8">
+        <div className="container mx-auto">
+
+          <div className="text-center mb-8 sm:mb-12">
+            <h5 className="text-red-500 font-semibold">Upcoming Events</h5>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 text-gray-800">
+              Charitics Information Of Event Schedule
+            </h2>
+            <button className="mt-3 sm:mt-4 px-4 sm:px-6 py-2 bg-red-500 text-white rounded-lg flex items-center gap-2 mx-auto hover:bg-red-600 transition-colors">
+              Explore More <ArrowRight size={18} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {events.map((item, index) => (
+              <div
+                key={index}
+                className="border border-blue-200 rounded-xl overflow-hidden bg-white hover:bg-blue-100 transition-all hover:scale-105 duration-300 shadow-md hover:shadow-lg"
+              >
+                <img
+                  src={item.img}
+                  alt="Event"
+                  className="w-full h-40 sm:h-44 object-cover"
+                />
+                <div className="p-3 sm:p-4">
+                  <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
+                    <div className="text-center bg-red-500 text-white w-10 sm:w-12 py-1 rounded-md flex-shrink-0">
+                      <h3 className="text-sm sm:text-lg font-bold">{item.day}</h3>
+                      <p className="text-[9px] sm:text-xs">{item.month}</p>
+                    </div>
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-800 leading-tight">{item.title}</h3>
+                  </div>
+                  <p className="text-gray-600 text-[10px] sm:text-xs mb-2 sm:mb-3 leading-relaxed">{item.text}</p>
+                  <div className="mb-2 sm:mb-3">
+                    <h5 className="font-semibold text-gray-700 text-xs sm:text-sm">Venue</h5>
+                    <p className="text-gray-600 text-xs sm:text-sm">{item.venue}</p>
+                  </div>
+                  <button className="text-red-500 font-semibold flex items-center gap-1 hover:text-red-600 transition-colors text-xs sm:text-sm">
+                    Event Details <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= TESTIMONIALS SECTION ================= */}
+      <section className="py-16 sm:py-20 bg-white px-4 sm:px-6 md:px-8">
+        <div className="container mx-auto">
+
+          <p className="text-orange-500 font-medium mb-2 text-sm sm:text-base">❤️ Start donating poor people</p>
+
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
+            What People Say About <span className="text-orange-500">Anand Seva Trust</span>
+          </h2>
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 sm:gap-10">
+
+            {/* Left rating card */}
+            <div className="bg-orange-50 rounded-2xl shadow p-6 sm:p-10 w-full md:w-[380px] mb-8 md:mb-0">
+              <h3 className="text-4xl sm:text-5xl font-bold text-gray-900 text-center">4.9</h3>
+              <div className="flex justify-center mt-2 sm:mt-3">
+                {[1,2,3,4,5].map((i) => (
+                  <FaStar key={i} className="text-orange-500 text-lg sm:text-xl" />
+                ))}
+              </div>
+              <p className="text-center text-gray-600 mt-1 sm:mt-2 text-xs sm:text-sm">5 Star Rating</p>
+              <p className="text-gray-600 text-sm sm:text-base mt-4 sm:mt-6 text-center">
+                Join thousands of satisfied donors and volunteers who have experienced 
+                the transformative work of Anand Seva Trust.
+              </p>
+              <div className="flex justify-center gap-2 sm:gap-4 mt-4 sm:mt-6">
+                <img src="https://i.pravatar.cc/40?img=1" className="w-8 sm:w-10 h-8 sm:h-10 rounded-full" alt="User 1" />
+                <img src="https://i.pravatar.cc/40?img=2" className="w-8 sm:w-10 h-8 sm:h-10 rounded-full" alt="User 2" />
+                <img src="https://i.pravatar.cc/40?img=3" className="w-8 sm:w-10 h-8 sm:h-10 rounded-full" alt="User 3" />
+                <img src="https://i.pravatar.cc/40?img=4" className="w-8 sm:w-10 h-8 sm:h-10 rounded-full" alt="User 4" />
+              </div>
+            </div>
+
+            {/* Right side - Testimonials Carousel */}
+            <div className="flex-1 relative w-full">
+              <div className="overflow-hidden">
+                <div 
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${currentTestimonial * 100}%)` }}
+                >
+                  {[...Array(4)].map((_, index) => (
+                    <div key={index} className="w-full flex-shrink-0 px-2 sm:px-4">
+                      <p className="text-orange-500 text-3xl sm:text-5xl mb-2 sm:mb-4">❝</p>
+                      <p className="text-gray-600 text-sm sm:text-lg leading-relaxed">
+                        "{testimonials[index % testimonials.length].content}"
+                      </p>
+                      <div className="flex items-center gap-2 sm:gap-4 mt-4 sm:mt-8">
+                        <img
+                          src={`https://i.pravatar.cc/60?img=${index+12}`}
+                          className="w-10 sm:w-14 h-10 sm:h-14 rounded-full"
+                          alt={testimonials[index % testimonials.length].name}
+                        />
+                        <div>
+                          <h4 className="text-sm sm:text-xl font-bold text-gray-900">
+                            {testimonials[index % testimonials.length].name}
+                          </h4>
+                          <p className="text-xs sm:text-sm text-gray-500">{testimonials[index % testimonials.length].role}</p>
                         </div>
                       </div>
                     </div>
                   ))}
-                </motion.div>
-              </AnimatePresence>
+                </div>
+              </div>
 
-              {/* Navigation Dots */}
-              <div className="flex justify-center space-x-2 mt-6 md:mt-8">
-                {[...Array(Math.ceil(reviews.length / (window.innerWidth < 768 ? 1 : 3)))].map((_, index) => (
+              {/* Navigation arrows */}
+              <div className="flex items-center gap-2 sm:gap-4 mt-2 sm:mt-8">
+                <button 
+                  onClick={() => setCurrentTestimonial((prev) => prev === 0 ? 3 : prev - 1)}
+                  className="w-8 sm:w-10 h-8 sm:h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 transition"
+                >
+                  ←
+                </button>
+                <button 
+                  onClick={() => setCurrentTestimonial((prev) => (prev + 1) % 4)}
+                  className="w-8 sm:w-10 h-8 sm:h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 transition"
+                >
+                  →
+                </button>
+              </div>
+
+              {/* Testimonial Indicators */}
+              <div className="flex justify-center gap-1 sm:gap-2 mt-2 sm:mt-6">
+                {[0, 1, 2, 3].map((index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentReviewSet(index)}
-                    className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-                      index === currentReviewSet ? 'bg-orange-500' : 'bg-gray-300'
+                    onClick={() => setCurrentTestimonial(index)}
+                    className={`rounded-full transition-all duration-300 ${
+                      index === currentTestimonial ? 'bg-orange-500 w-6 h-3 sm:w-8 sm:h-3' : 'bg-orange-300 w-3 h-3 sm:w-3 sm:h-3'
                     }`}
                   />
                 ))}
               </div>
             </div>
+
+          </div>
+
+          <div className="mt-6 sm:mt-10 flex justify-end">
+            <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow transition flex items-center gap-2 text-sm sm:text-base">
+              ➤ All Testimonials
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ============ WORKFLOW SECTION ============ */}
+      <section className="bg-[green] py-16 sm:py-20 px-4 sm:px-6 md:px-8">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl text-white font-semibold mb-2 sm:mb-4">
+            Anand Seva Trust
+          </h2>
+          <p className="text-gray-200 max-w-3xl mx-auto mb-10 sm:mb-16 text-sm sm:text-lg">
+            Extending Care. Restoring Lives. Empowering Futures.
+          </p>
+
+          <div className="flex flex-col md:flex-row flex-wrap justify-center md:justify-between items-center gap-6 sm:gap-8 relative">
+            {steps.map((step, index) => {
+              const isActive = index === activeIndex;
+
+              return (
+                <div key={index} className="flex flex-col items-center text-center relative mb-6 md:mb-0">
+
+                  <div
+                    onClick={() => setActiveIndex(index)}
+                    className={`w-16 sm:w-20 h-16 sm:h-20 flex items-center justify-center rounded-full border-2 cursor-pointer transition-all duration-300
+                      ${isActive
+                        ? "bg-gradient-to-r from-teal-400 to-cyan-300 text-white border-transparent shadow-xl transform -translate-y-1 sm:-translate-y-2 scale-105"
+                        : "border-white text-white hover:shadow-md"
+                      }`}
+                  >
+                    <span className="text-xl sm:text-2xl font-semibold">{step.id}</span>
+                  </div>
+
+                  {index !== steps.length - 1 && (
+                    <div
+                      className={`hidden md:block absolute top-8 sm:top-10 left-[100%] w-16 sm:w-24 border-t
+                        ${index < activeIndex ? "border-white opacity-90" : "border-white/30 opacity-40"}
+                      `}
+                    ></div>
+                  )}
+
+                  <h3 className="text-sm sm:text-lg text-white font-semibold mt-2 sm:mt-4">
+                    {step.title}
+                  </h3>
+
+                  <p className="text-gray-200 text-xs sm:text-sm mt-1 sm:mt-2 max-w-[200px] sm:max-w-[220px]">
+                    {step.text}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Core Values */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-800 mb-3 md:mb-4">
-              Our Core Values
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 px-2">
-              The principles that guide every transaction and partnership
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-4xl mx-auto px-2">
-            {values.map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="text-center p-4 md:p-6"
-              >
-                <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-orange-500">{value.icon}</div>
-                <h3 className="text-lg md:text-xl font-semibold text-blue-800 mb-2 md:mb-3 leading-tight">{value.title}</h3>
-                <p className="text-gray-600 leading-relaxed text-sm md:text-base">{value.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-800 to-blue-900 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">
-              Ready to Expand Your Global Reach?
-            </h2>
-            <p className="text-lg md:text-xl text-blue-200 mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
-              Partner with Anand Imports & Exports and experience seamless global trading. 
-              Let's connect markets and deliver excellence together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-              <Link 
-                to="/contact" 
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 text-sm md:text-base"
-              >
-                Get In Touch
-              </Link>
-              <Link 
-                to="/services" 
-                className="border border-white text-white hover:bg-white hover:text-blue-800 px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold transition-all duration-300 text-sm md:text-base"
-              >
-                Explore Services
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;
