@@ -105,7 +105,7 @@ const Services = () => {
     >
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
-      <div className="container mx-auto sm:px-6 lg:px-8 relative z-10 bg-gradient-to-br from-yellow-500 via-yellow-400 to-blue-700 overflow-hidden">
+      <div className="container mx-auto sm:px-6 lg:px-8 relative z-10  overflow-hidden">
         <div className="text-center mb-20 animate-fade-in">
           <div className="inline-block px-4 py-2 bg-primary/10 rounded-full mb-4">
             <span className="text-sm font-semibold text-primary">

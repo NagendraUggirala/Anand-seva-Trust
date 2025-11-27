@@ -460,7 +460,7 @@ const HomePage = () => {
       </section>
 
       {/* ============ WORKFLOW SECTION ============ */}
-      <section className="bg-[green] py-16 sm:py-20 px-4 sm:px-6 md:px-8">
+      <section className="bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-600 py-16 sm:py-20 px-4 sm:px-6 md:px-8">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-4xl text-white font-semibold mb-2 sm:mb-4">
             Anand Seva Trust

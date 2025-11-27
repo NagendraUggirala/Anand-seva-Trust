@@ -77,7 +77,7 @@ function Industries() {
 
 
   return (
-    <div className="bg-gradient-to-br from-yellow-600 via-orange-500 to-blue-700 overflow-hidden py-16">
+    <div className=" overflow-hidden py-16">
       <div className="container mx-auto px-6 md:px-12">
 
         {/* TITLE */}
